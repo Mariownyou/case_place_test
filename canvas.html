@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas</title>
+
+    <style>
+        body {
+            height: 100vh;
+            font-family: sans-serif;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+        }
+
+        .canvas {
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        }
+
+        .button-container {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .button {
+            background: #e87840;
+            background: linear-gradient(to bottom, #f88850 0%, #d86830 100%);
+            color: #fff !important;
+            font-size: 28px;
+            line-height: 36px;
+            padding: 12px 48px 10px;
+            font-weight: normal;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .button:hover {
+            box-shadow: inset 0 0 100px rgba(0, 0, 0, .16);
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <canvas id="canvas" class="canvas" width="1000px" height="1000px">
+            Извините, ваш браузер нет поддерживает&lt;canvas&gt; элемент.
+        </canvas>
+        <div class="button-container">
+            <button id="button" class="button">Повернуть</button>
+        </div>
+    </div>
+</body>
+
+<script>
+    let canvas = document.getElementById('canvas');
+    let button = document.getElementById('button');
+    let ctx = canvas.getContext("2d");
+
+    function get_canvas_center(canvas) {
+        let w = canvas.width;
+        let h = canvas.height;
+        return [w / 2, h / 2];
+    }
+
+    function draw_rect(w, h, angle) {
+        ctx.clearRect(0, 0, 1000, 1000)
+        let x = get_canvas_center(canvas)[0]
+        let y = get_canvas_center(canvas)[1]
+
+        ctx.fillStyle = "#000000";
+        if (angle != 0) {
+            ctx.translate(w + w / 2, -h / 2);
+            ctx.rotate(angle * Math.PI / 180)
+        } else {
+            ctx.translate(w / 2, h /2);
+        }
+        ctx.fillRect(x - w, y - h, w, h);
+    }
+
+    draw_rect(200, 100, 0)
+
+    button.addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log('hello');
+        draw_rect(300, 200, 45)
+    }, { once: true })
+
+    console.log(get_canvas_center(canvas))
+
+</script>
+
+</html>
